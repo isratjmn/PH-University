@@ -42,22 +42,11 @@ export type TStudent = {
   profileImg?: string;
   admissionSemester: Types.ObjectId;
   academicDepartment: Types.ObjectId;
+  academicFaculty: Types.ObjectId;
   isDeleted: boolean;
 };
 
 // For Creating Static
 export interface StudentModel extends Model<TStudent> {
-  isUserExits(id: string): Promise<TStudent | null>
-}
-
-
-// For Creating Instance
-/* export type StudentMethods = {
-  // eslint-disable-next-line no-unused-vars
   isUserExits(id: string): Promise<TStudent | null>;
-}; */
-/* export type StudentModel = Model<
-  TStudent,
-  Record<string, never>,
-  StudentMethods
->; */
+}

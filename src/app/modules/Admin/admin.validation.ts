@@ -9,7 +9,7 @@ const createUserNameValidationSchema = z.object({
 
 const createAdminValidationSchema = z.object({
   body: z.object({
-    password: z.string().max(20),
+    password: z.string().max(20).optional(),
     admin: z.object({
       designation: z.string(),
       name: createUserNameValidationSchema,
@@ -21,7 +21,7 @@ const createAdminValidationSchema = z.object({
       bloogGroup: z.enum([...BloodGroup] as [string, ...string[]]),
       presentAddress: z.string(),
       permanentAddress: z.string(),
-      profileImg: z.string(),
+      profileImg: z.string().optional(),
     }),
   }),
 });

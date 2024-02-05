@@ -33,7 +33,7 @@ const updateCourseValidationSchema = z.object({
 
 const facultiesWithCourseValidationSchema = z.object({
   body: z.object({
-    faulties: z.array(z.string()),
+    faculties: z.array(z.string()),
   }),
 });
 
