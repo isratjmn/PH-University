@@ -4,7 +4,6 @@ import {
   academicSemesternameCodeMapper,
 } from './academicSemester.constant';
 import { TAcademicSemester } from './academicSemester.interface';
-// import { AcademicSemeter } from './academicSemester.model';
 import AppError from '../../errors/AppError';
 import { AcademicSemester } from './academicSemester.model';
 import QueryBuilder from '../../../builder/QueryBuilder';
