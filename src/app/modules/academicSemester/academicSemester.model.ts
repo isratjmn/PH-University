@@ -7,7 +7,6 @@ import {
 } from './academicSemester.constant';
 import AppError from '../../errors/AppError';
 import httpStatus from 'http-status';
-
 const academicSemesterSchema = new Schema<TAcademicSemester>(
   {
     name: {
@@ -39,7 +38,6 @@ const academicSemesterSchema = new Schema<TAcademicSemester>(
     timestamps: true,
   },
 );
-
 academicSemesterSchema.pre('save', async function (next) {
   const isSemesterExists = await AcademicSemester.findOne({
     year: this.year,

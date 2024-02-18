@@ -27,7 +27,7 @@ class QueryBuilder<T> {
   }
 
   filter() {
-    const queryObj = { ...this.query }; // Copy
+    const queryObj = { ...this.query };
     // Filtering
     const excludeFields = ['searchTerm', 'sort', 'limit', 'page', 'fields'];
     excludeFields.forEach((el) => delete queryObj[el]);
@@ -47,7 +47,6 @@ class QueryBuilder<T> {
     const page = Number(this?.query?.page) || 1;
     const limit = Number(this?.query?.limit) || 10;
     const skip = (page - 1) * limit;
-
     this.modelQuery = this.modelQuery.skip(skip).limit(limit);
     return this;
   }
@@ -56,7 +55,6 @@ class QueryBuilder<T> {
     const fields =
       (this?.query?.fields as string)?.split(',')?.join(' ') || '-__v';
     this.modelQuery = this.modelQuery.select(fields);
-
     return this;
   }
 

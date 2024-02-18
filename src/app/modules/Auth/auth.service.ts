@@ -84,7 +84,6 @@ const changePassword = async (
   if (userStatus === 'blocked') {
     throw new AppError(httpStatus.FORBIDDEN, 'This User is Blocked');
   }
-
   // Checking if the Passwod is Correct
   if (!(await User.isPasswordMatched(payload.oldPassword, user?.password))) {
     throw new AppError(httpStatus.FORBIDDEN, 'Password Does not Matched');
@@ -94,7 +93,6 @@ const changePassword = async (
     payload.newPassword,
     Number(config.bcrypt_salt_rounds),
   );
-
   await User.findOneAndUpdate(
     {
       id: userData.userId,

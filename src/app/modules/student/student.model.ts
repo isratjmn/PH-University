@@ -15,10 +15,6 @@ const userNameSchema = new Schema<TUserName>({
         return firstNameStr === value;
       },
       message: '{VALUE} is not in the capitaliza format',
-      /* if (value !== firstNameStr) {
-        return false;
-      }
-      return true; */
     },
   },
   middleName: {

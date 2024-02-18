@@ -178,7 +178,6 @@ const getMyOfferedCoursesFromDB = async (
   query: Record<string, unknown>,
 ) => {
   //pagination setup
-
   const page = Number(query?.page) || 1;
   const limit = Number(query?.limit) || 10;
   const skip = (page - 1) * limit;
@@ -192,7 +191,7 @@ const getMyOfferedCoursesFromDB = async (
   //find current ongoing semester
   const currentOngoingRegistrationSemester = await SemesterRegistration.findOne(
     {
-      status: 'ONGOING',
+      status: 'Ongoing',
     },
   );
 
@@ -340,11 +339,8 @@ const getMyOfferedCoursesFromDB = async (
     ...aggregationQuery,
     ...paginationQuery,
   ]);
-
   const total = (await OfferedCourse.aggregate(aggregationQuery)).length;
-
   const totalPage = Math.ceil(result.length / limit);
-
   return {
     meta: {
       page,
