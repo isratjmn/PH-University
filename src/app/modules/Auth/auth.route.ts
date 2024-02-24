@@ -1,9 +1,10 @@
+import { USER_ROLE } from './../user/user.constant';
 import express from 'express';
 import validateRequest from '../../../middleware/validateRequest';
 import { AuthValidation } from './auth.validation';
 import { AuthControllers } from './auth.controller';
 import auth from '../../../middleware/auth';
-import { USER_ROLE } from '../user/user.constant';
+
 
 const router = express.Router();
 
@@ -15,6 +16,7 @@ router.post(
 
 router.post(
   '/change-password',
+
   auth(USER_ROLE.student, USER_ROLE.faculty, USER_ROLE.admin),
   validateRequest(AuthValidation.changePassValidationSchema),
   AuthControllers.changePassword,

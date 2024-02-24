@@ -9,10 +9,9 @@ import { TFaculty } from './faculty.interface';
 import { Faculty } from './faculty.model';
 import QueryBuilder from '../../../builder/QueryBuilder';
 
-
 const getAllFacultiesFromDB = async (query: Record<string, unknown>) => {
   const facultyQuery = new QueryBuilder(
-    Faculty.find().populate('academicDepartment'),
+    Faculty.find().populate('academicDepartment  academicFaculty'),
     query,
   )
     .search(FacultySearchableFields)
@@ -92,7 +91,6 @@ const deleteFacultyFromDB = async (id: string) => {
 };
 
 export const FacultyServices = {
-
   getAllFacultiesFromDB,
   getSingleFacultyFromDB,
   updateFacultyIntoDB,

@@ -18,8 +18,27 @@ router.post(
 
 router.get(
   '/',
-  auth(USER_ROLE.admin),
+  auth(
+    USER_ROLE.student,
+    USER_ROLE.faculty,
+    USER_ROLE.admin,
+    USER_ROLE.superAdmin,
+  ),
   AcademicSemesterControllers.getAllAcademicSemester,
+);
+
+router.get(
+  '/:semesterId',
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin),
+  AcademicSemesterControllers.getSingleAcademicSemester,
+);
+
+router.patch(
+  '/:semesterId',
+  validateRequest(
+    AcademicSemesterValidations.updateAcademicSemesterValidationSchema,
+  ),
+  AcademicSemesterControllers.updateAcademicSemester,
 );
 
 export const AcademicSemesterRoutes = router;

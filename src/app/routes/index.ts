@@ -13,7 +13,6 @@ import { AdminRoutes } from '../modules/Admin/admin.route';
 import { EnrollCourseRoutes } from '../modules/enrolledCourse/enrolledCourse.route';
 
 const router = Router();
-
 const moduleRoutes = [
   {
     path: '/students',

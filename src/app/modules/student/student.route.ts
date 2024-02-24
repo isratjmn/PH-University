@@ -7,16 +7,17 @@ import { USER_ROLE } from '../user/user.constant';
 const router = express.Router();
 
 //Will Call Controller Function
-router.get('/',
-auth(USER_ROLE.admin, USER_ROLE.superAdmin),
+router.get(
+  '/',
+  auth(USER_ROLE.admin, USER_ROLE.superAdmin),
 
- StudentControllers.getAllStudents);
+  StudentControllers.getAllStudents,
+);
 
 router.get(
   '/:id',
   auth(USER_ROLE.admin, USER_ROLE.superAdmin, USER_ROLE.faculty),
-
-  StudentControllers.getAllStudents,
+  StudentControllers.getSingleStudent,
 );
 
 router.patch(
@@ -27,9 +28,11 @@ router.patch(
   StudentControllers.updateStudent,
 );
 
-router.delete('/:id',
-auth(USER_ROLE.admin, USER_ROLE.superAdmin),
+router.delete(
+  '/:id',
+  auth(USER_ROLE.admin, USER_ROLE.superAdmin),
 
-StudentControllers.deleteStudent);
+  StudentControllers.deleteStudent,
+);
 
 export const StudentRoutes = router;

@@ -19,7 +19,8 @@ const getAllCourses = catchAsync(async (req, res) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Courses are Retrived Successfully',
-    data: result,
+    meta: result.meta,
+    data: result.result,
   });
 });
 
@@ -72,12 +73,11 @@ const assignFacultiesWithCourse = catchAsync(async (req, res) => {
 
 const getFacultiesWithCourse = catchAsync(async (req, res) => {
   const { courseId } = req.params;
-
   const result = await CourseServices.getFacultiesWithCourseFromDB(courseId);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'faculties are Assigned Successfully',
+    message: 'Faculties Retrived  Successfully',
     data: result,
   });
 });

@@ -70,6 +70,7 @@ const getAllSemesterRegistrationFromDB = async (
 
 const getSingleSemesterRegisterFromDB = async (id: string) => {
   const result = await SemesterRegistration.findById(id);
+  
   return result;
 };
 

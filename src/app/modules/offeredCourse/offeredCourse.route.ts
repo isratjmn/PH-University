@@ -21,21 +21,20 @@ router.get(
 );
 
 router.get(
+  '/my-offered-courses',
+  auth(USER_ROLE.student),
+  OfferedCourseControllers.getMyOfferedCourses,
+);
+
+router.get(
   '/:id',
   auth(
     USER_ROLE.superAdmin,
     USER_ROLE.faculty,
     USER_ROLE.admin,
     USER_ROLE.student,
-    USER_ROLE.student,
   ),
-  OfferedCourseControllers.getAllOfferedCourses,
-);
-
-router.get(
-  '/my-offered-courses',
-  auth(USER_ROLE.student),
-  OfferedCourseControllers.getMyOfferedCourses,
+  OfferedCourseControllers.getSingleOfferedCourses,
 );
 
 router.patch(

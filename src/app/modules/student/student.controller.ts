@@ -19,7 +19,7 @@ const getSingleStudent = catchAsync(async (req, res) => {
   const result = await StudentServices.getSingleStudentFromDB(id);
   res.status(200).json({
     success: true,
-    message: 'Student is retrive Successfully',
+    message: 'Student is retrive Successfully....🥰',
     data: result,
   });
 });

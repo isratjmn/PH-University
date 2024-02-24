@@ -18,7 +18,7 @@ const getAllCoursesFromDB = async (query: Record<string, unknown>) => {
   )
     .search(CourseSearchableFields)
     .filter()
-    .sort()
+    .sort() 
     .paginate()
     .fields();
   const meta = await courseQuery.countTotal();
@@ -92,7 +92,6 @@ const updateCourseIntoDB = async (id: string, payload: Partial<TCourse>) => {
       const newPreRequisites = preRequisiteCourses?.filter(
         (el) => el.course && !el.isDeleted,
       );
-
       const newpreRequisiteCourses = await Course.findByIdAndUpdate(
         id,
         {
@@ -110,7 +109,6 @@ const updateCourseIntoDB = async (id: string, payload: Partial<TCourse>) => {
           'Faised to Update the Course',
         );
       }
-
       const result = await Course.findById(id).populate(
         'preRequisiteCourses.course',
       );

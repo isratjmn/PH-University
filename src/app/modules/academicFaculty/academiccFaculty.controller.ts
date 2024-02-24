@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
@@ -17,10 +18,12 @@ const createAcademicFaculty = catchAsync(async (req, res) => {
 
 const getAllAcademicfaculties = catchAsync(async (req, res) => {
   const result = await AcademicFacultyServices.getAllAcademicFacultiesFromDB();
+
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Academic Faculties are Retrived Successfully',
+    // meta: result.meta || {},
     data: result,
   });
 });

@@ -1,4 +1,3 @@
-
 /* eslint-disable no-unused-vars */
 import { Model, Types } from 'mongoose';
 
@@ -23,18 +22,19 @@ export type TFaculty = {
   id: string;
   user: Types.ObjectId;
   designation: string;
+  password?: string;
   name: TUserName;
   gender: TGender;
   dateOfBirth?: Date;
   email: string;
   contactNo: string;
   emergencyContactNo: string;
-  bloogGroup?: TBloodGroup;
+  bloodGroup?: TBloodGroup;
   presentAddress: string;
   permanentAddress: string;
   profileImg?: string;
   academicDepartment: Types.ObjectId;
-  AcademicFaculty: Types.ObjectId;
+  academicFaculty?: Types.ObjectId;
   isDeleted: boolean;
 };
 

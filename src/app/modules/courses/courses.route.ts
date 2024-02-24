@@ -8,7 +8,7 @@ import auth from '../../../middleware/auth';
 const router = express.Router();
 router.post(
   '/create-course',
-  auth(USER_ROLE.admin),
+  auth(USER_ROLE.admin, USER_ROLE.superAdmin),
   validateRequest(CourseValidations.createCourseVlidationSchema),
   CourseControllers.createCourses,
 );
@@ -34,11 +34,11 @@ router.delete(
   '/:id',
   auth(USER_ROLE.superAdmin, USER_ROLE.admin),
   CourseControllers.deleteCourse,
-);
+); 
 
 router.put(
   '/:courseId/assign-faculties',
-  auth(USER_ROLE.superAdmin, USER_ROLE.admin),
+  // auth(USER_ROLE.superAdmin, USER_ROLE.admin),
   validateRequest(CourseValidations.facultiesWithCourseValidationSchema),
   CourseControllers.assignFacultiesWithCourse,
 );
@@ -61,12 +61,12 @@ router.delete(
 );
 router.get(
   '/',
-  auth(
+  /* auth(
     USER_ROLE.superAdmin,
     USER_ROLE.admin,
     USER_ROLE.faculty,
     USER_ROLE.student,
-  ),
+  ), */
 
   CourseControllers.getAllCourses,
 );

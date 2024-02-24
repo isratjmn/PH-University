@@ -19,13 +19,28 @@ const getAllOfferedCourses = catchAsync(async (req: Request, res: Response) => {
   const result = await OfferedCourseService.getAllOfferedCoursesFromDB(
     req.query,
   );
-
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'OfferedCourses retrieved successfully !',
-    // meta: result.meta,
+    meta: result.meta,
     data: result.result,
+  });
+});
+
+const getMyOfferedCourses = catchAsync(async (req: Request, res: Response) => {
+  const userId = req.user.userId;
+  const result = await OfferedCourseService.getMyOfferedCoursesFromDB(
+    userId,
+    req.query,
+  );
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'OfferedCourses retrieved successfully..!!!',
+    // meta: result.meta,
+    data: result,
   });
 });
 
@@ -42,23 +57,6 @@ const getSingleOfferedCourses = catchAsync(
     });
   },
 );
-
-
-const getMyOfferedCourses = catchAsync(async (req: Request, res: Response) => {
-  const userId = req.user.userId;
-  const result = await OfferedCourseService.getMyOfferedCoursesFromDB(
-    userId,
-    req.query,
-  );
-
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: 'OfferedCourses retrieved successfully !',
-    // meta: result.meta,
-    data: result.result,
-  });
-});
 
 const updateOfferedCourse = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;

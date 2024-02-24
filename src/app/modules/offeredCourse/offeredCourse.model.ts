@@ -4,6 +4,10 @@ import { Days } from './offeredCourse.constant';
 
 const offeredCourseSchema = new mongoose.Schema<TOfferedCourse>(
   {
+    _id: {
+      type: Schema.Types.ObjectId,
+      auto: true, // Ensure it's automatically generated
+    },
     semesterRegistration: {
       type: Schema.Types.ObjectId,
       required: true,

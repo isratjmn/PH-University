@@ -26,7 +26,6 @@ const auth = (...requiredRoles: TUserRole[]) => {
     } catch (error) {
       throw new AppError(httpStatus.UNAUTHORIZED, 'Unauthorized Access');
     }
-    console.log(decoded);
 
     const { role, userId, iat } = decoded;
 

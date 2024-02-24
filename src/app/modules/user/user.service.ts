@@ -29,11 +29,9 @@ const createStudentIntoDB = async (
   const userData: Partial<TUser> = {};
   // If password is not Given , Use default password
   userData.password = password || (config.default_pass as string);
-
   // Set Student Role
   userData.role = 'student';
   userData.email = payload.email;
-
   // Find Academic Semester Info
   const admisssionSemester = await AcademicSemester.findById(
     payload.admissionSemester,
@@ -113,7 +111,7 @@ const createFacultyIntoDB = async (
   if (!academicDepartment) {
     throw new AppError(400, 'Academic department not found');
   }
-  payload.AcademicFaculty = academicDepartment?.academicFaculty;
+  payload.academicFaculty = academicDepartment?.academicFaculty;
   const session = await mongoose.startSession();
   try {
     session.startTransaction();
@@ -206,7 +204,6 @@ const createAdminIntoDB = async (
 const getMe = async (userId: string, role: string) => {
   /* const decoded = verifyToken(token, config.jwt_access_secret as string);
   const { userId, role } = decoded; */
-  // console.log(userId, role);
   let result = null;
   if (role === 'student') {
     result = await Student.findOne({

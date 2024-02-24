@@ -32,8 +32,6 @@ const loginUser = async (payload: TLoginUser) => {
   if (!(await User.isPasswordMatched(payload?.password, user?.password))) {
     throw new AppError(httpStatus.FORBIDDEN, 'Password Does not Matched');
   }
-  console.log(user?.password);
-  console.log(payload?.password);
   // Create Token and Sent to the Client
   const jwtPayload = {
     userId: user.id,
@@ -66,10 +64,8 @@ const changePassword = async (
     newPassword: string;
   },
 ) => {
-  // Checking if the User is Exist
-  // console.log(userData);
+
   const user = await User.isUserExistsByCustomID(userData.userId);
-  console.log(userData.userId, '--------------------');
   if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, 'This User is not Found');
   }
@@ -212,7 +208,6 @@ const resetPassword = async (
   ) as JwtPayload;
 
   if (payload.id !== decoded.userId) {
-    console.log(payload.id, decoded.userId);
     throw new AppError(httpStatus.FORBIDDEN, 'You are forbidden!');
   }
 

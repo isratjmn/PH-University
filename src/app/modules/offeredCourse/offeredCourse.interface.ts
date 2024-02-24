@@ -1,4 +1,4 @@
-import { Types } from 'mongoose';
+import { Schema, Types } from 'mongoose';
 
 export type TDays =
   | 'Sat'
@@ -11,6 +11,8 @@ export type TDays =
   | 'Sat';
 
 export type TOfferedCourse = {
+  _id: Schema.Types.ObjectId;
+
   semesterRegistration: Types.ObjectId;
   academicSemester?: Types.ObjectId;
   academicFaculty: Types.ObjectId;

@@ -10,6 +10,7 @@ import { SemesterRegistration } from '../semesterRegistration/semesterRegistrati
 import { Course } from '../courses/course.model';
 import { Faculty } from '../faculty/faculty.model';
 import { calculateGradeAndPoints } from './enrolledCourse.utils';
+import QueryBuilder from '../../../builder/QueryBuilder';
 
 const createEnrolledCourseIntoDB = async (
   userId: string,
@@ -21,20 +22,17 @@ const createEnrolledCourseIntoDB = async (
   Step 3: if the Max Credit Exceed
   Step 4 : Create an Enrolled Course 
   */
-
   const { offeredCourse } = payload;
   const isOfferedCourseExists = await OfferedCourse.findById(offeredCourse);
   if (!isOfferedCourseExists) {
     throw new AppError(httpStatus.NOT_FOUND, 'Offered Course Not Found');
   }
-
   if (isOfferedCourseExists.maxCapacity <= 0) {
     throw new AppError(
       httpStatus.BAD_REQUEST,
       'Enrollment for this course is closed!!',
     );
   }
-
   const student = await Student.findOne(
     {
       id: userId,
@@ -43,11 +41,9 @@ const createEnrolledCourseIntoDB = async (
       _id: 1,
     },
   );
-
   if (!student) {
     throw new AppError(httpStatus.NOT_FOUND, 'Student Not Found');
   }
-
   const isStudentAlreadyEnrolled = await EnrolledCourse.findOne({
     semesterRegistration: isOfferedCourseExists.semesterRegistration,
     offeredCourse,
@@ -56,7 +52,6 @@ const createEnrolledCourseIntoDB = async (
   if (isStudentAlreadyEnrolled) {
     throw new AppError(httpStatus.CONFLICT, 'Student Is Already Enrolled');
   }
-
   // Check Total credits exceeds MaxCredit
   const course = await Course.findById(isOfferedCourseExists.course);
   const currentCredit = course?.credits;
@@ -107,11 +102,9 @@ const createEnrolledCourseIntoDB = async (
       'You have exceeded maximum number of credits ',
     );
   }
-  console.log(totalCredits);
   const session = await mongoose.startSession();
   try {
     session.startTransaction();
-
     const result = await EnrolledCourse.create(
       [
         {
@@ -146,6 +139,36 @@ const createEnrolledCourseIntoDB = async (
     await session.endSession();
     throw new Error(err);
   }
+};
+
+const getMyEnrolledCoursesFromDB = async (
+  studentId: string,
+  query: Record<string, unknown>,
+) => {
+  const student = await Student.findOne({ id: studentId });
+
+  if (!student) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Student not found !');
+  }
+
+  const enrolledCourseQuery = new QueryBuilder(
+    EnrolledCourse.find({ student: student._id }).populate(
+      'semesterRegistration academicSemester academicFaculty academicDepartment offeredCourse course student faculty',
+    ),
+    query,
+  )
+    .filter()
+    .sort()
+    .paginate()
+    .fields();
+
+  const result = await enrolledCourseQuery.modelQuery;
+  const meta = await enrolledCourseQuery.countTotal();
+
+  return {
+    meta,
+    result,
+  };
 };
 
 const updateEnrollCourseMarksIntoBD = async (
@@ -194,7 +217,6 @@ const updateEnrollCourseMarksIntoBD = async (
   if (!isCourseBelongToFaculty) {
     throw new AppError(httpStatus.FORBIDDEN, 'You are Forbiddenn!!');
   }
-  // console.log(isCourseBelongToFaculty);
 
   const modifiedData: Record<string, unknown> = {
     ...courseMarks,
@@ -204,10 +226,10 @@ const updateEnrollCourseMarksIntoBD = async (
     const { classTest1, midTerm, classTest2, finalTerm } =
       isCourseBelongToFaculty.courseMarks;
     const totalMarks =
-      Math.ceil(classTest1 * 0.1) +
-      Math.ceil(midTerm * 0.3) +
-      Math.ceil(classTest2 * 0.1) +
-      Math.ceil(finalTerm * 0.5);
+      Math.ceil(classTest1) +
+      Math.ceil(midTerm) +
+      Math.ceil(classTest2) +
+      Math.ceil(finalTerm);
 
     const result = calculateGradeAndPoints(totalMarks);
     modifiedData.grade = result.grade;
@@ -233,4 +255,5 @@ const updateEnrollCourseMarksIntoBD = async (
 export const EnrolledCourseServices = {
   createEnrolledCourseIntoDB,
   updateEnrollCourseMarksIntoBD,
+  getMyEnrolledCoursesFromDB,
 };

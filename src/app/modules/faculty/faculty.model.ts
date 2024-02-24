@@ -35,14 +35,18 @@ const facultySchema = new Schema<TFaculty, FacultyModel>(
       unique: true,
       ref: 'User',
     },
-    designation: {
-      type: String,
-      required: [true, 'Designation is required'],
-    },
     name: {
       type: userNameSchema,
       required: [true, 'Name is required'],
     },
+    designation: {
+      type: String,
+      required: [true, 'Designation is required'],
+    },
+    password: {
+      type: String,
+    },
+
     gender: {
       type: String,
       enum: {
@@ -62,7 +66,7 @@ const facultySchema = new Schema<TFaculty, FacultyModel>(
       type: String,
       required: [true, 'Emergency contact number is required'],
     },
-    bloogGroup: {
+    bloodGroup: {
       type: String,
       enum: {
         values: BloodGroup,
@@ -86,10 +90,8 @@ const facultySchema = new Schema<TFaculty, FacultyModel>(
       required: [true, 'Academic Department is required'],
       ref: 'AcademicDepartment',
     },
-    AcademicFaculty: {
+    academicFaculty: {
       type: Schema.Types.ObjectId,
-      required: [true, 'Academic Faculty is required'],
-
       ref: 'AcademicFaculty',
     },
     isDeleted: {
